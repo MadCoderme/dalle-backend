@@ -1,29 +1,21 @@
-## Table of Contents
+## Documentation for DALL-E Server
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [API](#api)
-    - [Health Check](#health-check)
-- [Configuration](#configuration)
-- [Demo](#demo)
-- [Contributing](#contributing)
+### Introduction
 
-## Introduction
+This documentation provides a comprehensive guide to using the DALL-E Server, a user-friendly interface to access the DALL-E 2 model and generate high-quality images from text prompts.
 
-This project provides a user-friendly interface to access the DALL-E 2 model. With a simple API call, users can generate high-quality images from text prompts.
+### Installation
 
-## Installation
+To set up the DALL-E Server, follow these steps:
 
-To install the required dependencies, run the following command:
+1. Install the required Python dependencies using pip:
+   ```
+   pip install -r requirements.txt
+   ```
 
-```
-pip install -r requirements.txt
-```
+### Usage
 
-## Usage
-
-### API
+#### API
 
 To generate images using the API, send a POST request to the `/dalle` endpoint with the following JSON body:
 
@@ -36,11 +28,11 @@ To generate images using the API, send a POST request to the `/dalle` endpoint w
 
 The API will return a JSON response with the generated images encoded as base64 strings.
 
-### Health Check
+#### Health Check
 
 To check the health of the server, send a GET request to the `/` endpoint. The server will return a JSON response with a `success` field set to `True`.
 
-## Configuration
+### Configuration
 
 The following command-line arguments can be used to configure the server:
 
@@ -50,14 +42,14 @@ The following command-line arguments can be used to configure the server:
 - `--img_format`: The format of the generated images (default: "JPEG")
 - `--output_dir`: The directory in which to save the generated images (default: "./output")
 
-## Demo
+### Demo
 
-A live demo of the server is available at [https://dalle-server.herokuapp.com/](https://dalle-server.herokuapp.com/).
+A live demo of the DALL-E Server is available at [https://dalle-server.herokuapp.com/](https://dalle-server.herokuapp.com/).
 
-## Contributing
+### Contributing
 
-Contributions are welcome! Please read the [contributing guidelines](https://github.com/username/project-name/blob/main/CONTRIBUTING.md) before submitting a pull request.
+Contributions to the DALL-E Server are welcome. Please refer to the [contributing guidelines](https://github.com/username/project-name/blob/main/CONTRIBUTING.md) before submitting a pull request.
 
-## License
+### License
 
 This project is licensed under the MIT License.
