@@ -55,12 +55,6 @@ def generate_images_api():
     return jsonify(response)
 
 
-@app.route("/", methods=["GET"])
-@cross_origin()
-def health_check():
-    return jsonify(success=True)
-
-
 with app.app_context():
     dalle_model = DalleModel(args.model_version)
     dalle_model.generate_images("warm-up", 1)
