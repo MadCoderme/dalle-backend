@@ -13,12 +13,12 @@ from consts import ModelSize
 
 app = Flask(__name__)
 CORS(app)
-print("--> Starting DALL-E Server. This might take up to two minutes.")
+print("--> Starting DALL-E Server.")
 
 from dalle_model import DalleModel
 dalle_model = None
 
-parser = argparse.ArgumentParser(description = "A DALL-E app to turn your textual prompts into visionary delights")
+parser = argparse.ArgumentParser(description = "A DALL-E app")
 parser.add_argument("--port", type=int, default=8000, help = "backend port")
 parser.add_argument("--model_version", type = parse_arg_dalle_version, default = ModelSize.MINI, help = "Mini, Mega, or Mega_full")
 parser.add_argument("--save_to_disk", type = parse_arg_boolean, default = False, help = "Should save generated images to disk")
