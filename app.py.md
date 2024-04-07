@@ -6,6 +6,7 @@
 * [Prerequisites](#prerequisites)
 * [Setup](#setup)
 * [Usage](#usage)
+* [Command-line Arguments](#command-line-arguments)
 * [API Reference](#api-reference)
 * [Example Usage](#example-usage)
 
@@ -21,10 +22,10 @@ This Flask app provides a convenient interface to interact with the DALL-E model
 
 ## Setup
 
-- Clone this repository.
-- Install the required packages: `pip install -r requirements.txt`.
-- Download the DALL-E model from [HuggingFace](https://huggingface.co/models/dalle-mini).
-- Set the `DALLE_MODEL_PATH` environment variable to point to the downloaded model directory.
+1. Clone this repository.
+2. Install the required packages: `pip install -r requirements.txt`.
+3. Download the DALL-E model from [HuggingFace](https://huggingface.co/models/dalle-mini).
+4. Set the `DALLE_MODEL_PATH` environment variable to point to the downloaded model directory.
 
 ## Usage
 
@@ -35,6 +36,18 @@ python app.py
 ```
 
 By default, the app listens on port 8000.
+
+## Command-line Arguments
+
+The app can be configured using the following command-line arguments:
+
+| Argument | Type | Default | Description |
+|---|---|---|---|
+| `--port` | int | 8000 | The port to listen on. |
+| `--model_version` | string | Mini | The version of the DALL-E model to use (mini, mega, or mega_full). |
+| `--save_to_disk` | boolean | False | Whether or not to save the generated images to disk. |
+| `--img_format` | string | JPEG | The format of the generated images (JPEG or PNG). |
+| `--output_dir` | string | DEFAULT_IMG_OUTPUT_DIR | The directory to save the generated images to. |
 
 ## API Reference
 
@@ -83,11 +96,5 @@ with open('generated_image.jpg', 'wb') as f:
 
 ## Additional Notes
 
-- The app can be configured using the following command-line arguments:
-    - `--port`: The port to listen on.
-    - `--model_version`: The version of the DALL-E model to use (mini, mega, or mega_full).
-    - `--save_to_disk`: Whether or not to save the generated images to disk.
-    - `--img_format`: The format of the generated images (JPEG or PNG).
-    - `--output_dir`: The directory to save the generated images to.
 - The app uses the `flask-cors` package to allow cross-origin requests.
 - The app is tested using Pytest.
