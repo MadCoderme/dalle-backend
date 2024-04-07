@@ -50,7 +50,7 @@ def generate_images_api():
 
     print(f"Created {num_images} images from text prompt [{text_prompt}]")
     
-    response = {'generatedImgs': returned_generated_images,
+    response = {'generatedImages': returned_generated_images,
     'generatedImgsFormat': args.img_format}
     return jsonify(response)
 
