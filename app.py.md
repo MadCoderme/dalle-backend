@@ -1,59 +1,59 @@
-## 🖼️ Table of Contents
+**Table of Contents**
 
-- [Usage](#usage)
-- [Modules](#modules)
-    - [app.py](#app-py)
-- [Classes](#classes)
-    - [DalleModel](#dallemodel)
+* [Overview](#overview)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [API](#api)
+    * [`/dalle`](#dalle)
+* [Contributing](#contributing)
+* [License](#license)
 
-## 📖 Usage
+## Overview
 
-```python
-from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
-from dalle_model import DalleModel
+This Flask-based API server provides access to the DALL-E generative AI model, allowing users to convert text prompts into images.
 
-app = Flask(__name__)
-CORS(app)
+## Prerequisites
 
-dalle_model = DalleModel(ModelSize.MEGA)
+- Python 3.6+
+- Flask
+- Pillow
+- DALL-E model (available through `dalle_model` package)
 
-@app.route("/dalle", methods=["POST"])
-@cross_origin()
-def generate_images_api():
-    json_data = request.get_json(force=True)
-    text_prompt = json_data["text"]
-    num_images = json_data["num_images"]
-    generated_imgs = dalle_model.generate_images(text_prompt, num_images)
+## Installation
 
-    returned_generated_images = []
-    for img in generated_imgs:
-        buffered = BytesIO()
-        img.save(buffered, format="JPEG")
-        img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
-        returned_generated_images.append(img_str)
-
-    print(f"Created {num_images} images from text prompt [{text_prompt}]")
-
-    response = {'generatedImgs': returned_generated_images,
-                'generatedImgsFormat': 'JPEG'}
-    return jsonify(response)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=False)
+```bash
+pip install -r requirements.txt
 ```
 
-## 📦 Modules
+## Usage
 
-### app.py
+### API
 
-- Initializes the Flask app and sets up the CORS headers.
-- Loads the DalleModel and initializes it with the specified model version.
-- Defines the `/dalle` endpoint for generating images from text prompts.
+#### `/dalle`
 
-## 👥 Classes
+**Request**
 
-### DalleModel
+```json
+{
+  "text": "A photo of a cat wearing a top hat",
+  "num_images": 1
+}
+```
 
-- Loads the DALL-E model and handles the generation of images from text prompts.
-- Provides methods for generating images and saving them to disk.
+**Response**
+
+```json
+{
+  "generatedImgs": ["base64-encoded-image-data"],
+  "generatedImgsFormat": "JPEG"
+}
+```
+
+## Contributing
+
+Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
