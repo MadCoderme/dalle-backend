@@ -54,7 +54,10 @@ def generate_images_api():
     'generatedImgsFormat': args.img_format}
     return jsonify(response)
 
-
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+    
 with app.app_context():
     dalle_model = DalleModel(args.model_version)
     dalle_model.generate_images("warm-up", 1)
