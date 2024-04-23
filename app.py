@@ -26,6 +26,14 @@ parser.add_argument("--img_format", type = str.lower, default = "JPEG", help = "
 parser.add_argument("--output_dir", type = str, default = DEFAULT_IMG_OUTPUT_DIR, help = "Customer directory for generated images")
 args = parser.parse_args()
 
+
+@app.route("/")
+def hello_world():
+    # Let's add a new endpoint for our API
+    # Previously, before we made the change, the documentation contained information about the /post endpoint
+    # This time, we are adding a new / endpoint to check if the new documentation gets this added
+    return "<p>Hello, World!</p>"
+
 @app.route("/dalle", methods=["POST"])
 @cross_origin()
 def generate_images_api():
@@ -53,10 +61,6 @@ def generate_images_api():
     response = {'generatedImages': returned_generated_images,
     'generatedImgsFormat': args.img_format}
     return jsonify(response)
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
     
 with app.app_context():
     dalle_model = DalleModel(args.model_version)
