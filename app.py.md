@@ -8,7 +8,7 @@
 * [Usage](#usage)
 * [Command-line Arguments](#command-line-arguments)
 * [API Reference](#api-reference)
-* [Example Usage](#example-usage)
+* [Additional Notes](#additional-notes)
 
 ## Overview
 
@@ -64,37 +64,10 @@ The app can be configured using the following command-line arguments:
 
 | Field | Type | Description |
 |---|---|---|
-| generatedImgs | list of strings | Base64-encoded images generated from the prompt. |
+| generatedImages | list of strings | Base64-encoded images generated from the prompt. |
 | generatedImgsFormat | string | The format of the generated images (JPEG or PNG). |
-
-## Example Usage
-
-```python
-import requests
-
-# Set the URL and headers for the API call
-url = 'http://localhost:8000/dalle'
-headers = {'Content-Type': 'application/json'}
-
-# Prepare the JSON payload
-payload = {
-    'text': 'A photo of a cat wearing a cowboy hat',
-    'num_images': 1
-}
-
-# Send the API request
-response = requests.post(url, json=payload, headers=headers)
-
-# Parse the response
-data = response.json()
-
-# Decode and display the generated image
-image = base64.b64decode(data['generatedImgs'][0])
-with open('generated_image.jpg', 'wb') as f:
-    f.write(image)
-```
 
 ## Additional Notes
 
 - The app uses the `flask-cors` package to allow cross-origin requests.
-- The app is tested using Pytest.
+- The app is not production-ready and should not be used in a production environment.
