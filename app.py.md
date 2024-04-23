@@ -8,6 +8,7 @@
 * [Usage](#usage)
 * [Command-line Arguments](#command-line-arguments)
 * [API Reference](#api-reference)
+* [Code Structure](#code-structure)
 * [Additional Notes](#additional-notes)
 
 ## Overview
@@ -66,6 +67,15 @@ The app can be configured using the following command-line arguments:
 |---|---|---|
 | generatedImages | list of strings | Base64-encoded images generated from the prompt. |
 | generatedImgsFormat | string | The format of the generated images (JPEG or PNG). |
+
+## Code Structure
+
+The following is a high-level overview of the code structure:
+
+- `app.py`: The main Flask app file.
+- `consts.py`: Constants used throughout the app.
+- `dalle_model.py`: The DALL-E model wrapper class.
+- `utils.py`: Helper functions.
 
 ## Additional Notes
 
