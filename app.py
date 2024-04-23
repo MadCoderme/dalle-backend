@@ -27,7 +27,8 @@ parser.add_argument("--output_dir", type = str, default = DEFAULT_IMG_OUTPUT_DIR
 args = parser.parse_args()
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
+@cross_origin
 def hello_world():
     # Let's add a new endpoint for our API
     # Previously, before we made the change, the documentation contained information about the /post endpoint
