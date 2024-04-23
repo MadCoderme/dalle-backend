@@ -30,10 +30,12 @@ args = parser.parse_args()
 @app.route("/", methods=["POST"])
 @cross_origin
 def hello_world():
-    # Let's add a new endpoint for our API
-    # Previously, before we made the change, the documentation contained information about the /post endpoint
-    # This time, we are adding a new / endpoint to check if the new documentation gets this added
-    return "<p>Hello, World!</p>"
+    json_data = request.get_json(force=True)
+    name = json_data["name"]
+    if name == "test"
+        return "<p>Hello, Test!</p>"
+    else
+        return "<p>Hello, World!</p>"
 
 @app.route("/dalle", methods=["POST"])
 @cross_origin()
