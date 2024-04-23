@@ -1,83 +1,87 @@
-**DALL-E Flask App**
+## :computer: DALL-E Server with Flask API
 
-**Table of Contents**
+### Table of Contents
 
-* [Overview](#overview)
-* [Prerequisites](#prerequisites)
-* [Setup](#setup)
-* [Usage](#usage)
-* [Command-line Arguments](#command-line-arguments)
-* [API Reference](#api-reference)
-* [Code Structure](#code-structure)
-* [Additional Notes](#additional-notes)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Start the Server](#start-the-server)
+    - [Generate Images](#generate-images)
+- [API](#api)
+    - [/dalle](#dalle)
+- [Command-Line Arguments](#command-line-arguments)
+- [Additional Notes](#additional-notes)
 
-## Overview
+### Prerequisites
 
-This Flask app provides a convenient interface to interact with the DALL-E model, allowing you to generate images from text prompts.
-
-## Prerequisites
-
-- Python 3.8 or later
+- Python 3.8 or higher
 - Flask
-- DALL-E model (see [Setup](#setup) for details)
+- Pillow
+- Transformers
+- A GPU with at least 4GB of VRAM
 
-## Setup
+### Installation
 
-1. Clone this repository.
-2. Install the required packages: `pip install -r requirements.txt`.
-3. Download the DALL-E model from [HuggingFace](https://huggingface.co/models/dalle-mini).
-4. Set the `DALLE_MODEL_PATH` environment variable to point to the downloaded model directory.
-
-## Usage
-
-Start the app using the following command:
-
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/dalle-server.git
 ```
+
+2. Install the required packages:
+```bash
+pip install -r requirements.txt
+```
+
+### Usage
+
+**Assuming you have already installed the prerequisites and cloned the repository** 
+
+#### Start the Server
+
+To start the server, run the following command: 
+
+```bash
 python app.py
 ```
 
-By default, the app listens on port 8000.
+The server will start on port 8000. You can change the port by specifying the `--port` argument.
 
-## Command-line Arguments
+#### Generate Images
 
-The app can be configured using the following command-line arguments:
+To generate images, send a POST request to the `/dalle` endpoint with the following JSON payload:
 
-| Argument | Type | Default | Description |
-|---|---|---|---|
-| `--port` | int | 8000 | The port to listen on. |
-| `--model_version` | string | Mini | The version of the DALL-E model to use (mini, mega, or mega_full). |
-| `--save_to_disk` | boolean | False | Whether or not to save the generated images to disk. |
-| `--img_format` | string | JPEG | The format of the generated images (JPEG or PNG). |
-| `--output_dir` | string | DEFAULT_IMG_OUTPUT_DIR | The directory to save the generated images to. |
+```json
+{
+  "text": "Your text prompt",
+  "num_images": 4  
+}
+```
 
-## API Reference
+The server will generate the specified number of images and return them as a base64-encoded string.
 
-### `/dalle` (POST)
+### API
 
-**Request body:**
+**POST [dalle]**
+- Generates images based on a text prompt and returns them as a base64-encoded string.
+- Request Body:
+    - `text`: The text prompt to generate images from.
+    - `num_images`: The number of images to generate.
+- Response Body:
+    - `generatedImages`: A list of base64-encoded images.
+    - `generatedImgsFormat`: The format of the generated images (e.g. "JPEG", "PNG").
 
-| Field | Type | Description |
-|---|---|---|
-| text | string | The text prompt to generate images from. |
-| num_images | int | The number of images to generate. |
+### Command-Line Arguments
 
-**Response body:**
+The server can be customized using the following command-line arguments:
 
-| Field | Type | Description |
-|---|---|---|
-| generatedImages | list of strings | Base64-encoded images generated from the prompt. |
-| generatedImgsFormat | string | The format of the generated images (JPEG or PNG). |
+- `--port`: The port to run the server on.
+- `--model_version`: The version of the DALL-E model to use. Can be "mini", "mega", or "mega-full".
+- `--save_to_disk`: Whether to save the generated images to disk.
+- `--img_format`: The format of the generated images (e.g. "JPEG", "PNG").
+- `--output_dir`: The directory to save the generated images to.
 
-## Code Structure
+### Additional Notes
 
-The following is a high-level overview of the code structure:
-
-- `app.py`: The main Flask app file.
-- `consts.py`: Constants used throughout the app.
-- `dalle_model.py`: The DALL-E model wrapper class.
-- `utils.py`: Helper functions.
-
-## Additional Notes
-
-- The app uses the `flask-cors` package to allow cross-origin requests.
-- The app is not production-ready and should not be used in a production environment.
+- The server uses the DALL-E mini model by default. To use the mega or mega-full models, you will need a GPU with at least 10GB of VRAM.
+- The server can generate up to 10 images at a time.
+- The server is still under development. Please report any bugs or issues on GitHub.
