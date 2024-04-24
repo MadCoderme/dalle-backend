@@ -1,63 +1,137 @@
-**Table of Contents:**
+## 🖼️ DALL-E API 📸
 
-* [Introduction](#introduction)
-* [Usage](#usage)
-* [Configuration](#configuration)
-* [Backend API](#backend-api)
+### Table of Contents
 
-**Introduction**
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [API Endpoints](#api-endpoints)
+    - [Hello World Endpoint](#hello-world-endpoint)
+    - [DALL-E Generation Endpoint](#dalle-generation-endpoint)
+  - [Example Usage Code](#example-usage-code)
+- [Configuration](#configuration)
+- [Authors](#authors)
 
-This document provides a comprehensive overview of the internal DALL-E backend server for the team's use. The server utilizes DALL-E models to generate images from text prompts.
+### Overview
 
-**Usage**
+This API provides a simple and easy-to-use interface to [DALL-E](https://openai.com/dall-e-2/), a powerful AI model that can generate images from text descriptions. With this API, you can quickly and easily create stunning images for a variety of purposes, such as:
 
-To use the server, send a POST request to the `/dalle` endpoint with a JSON payload containing the following fields:
+- Social media posts
+- Blog posts
+- Presentations
+- Marketing materials
 
-* `text`: The text prompt to generate images from
-* `num_images`: The number of images to generate (max 100)
+### Installation
 
-Example usage:
+To install the DALL-E API, simply run the following command:
+
+```bash
+pip install dalle-api
+```
+
+### Usage
+
+#### API Endpoints
+
+The DALL-E API provides two main endpoints:
+
+##### Hello World Endpoint
+
+This endpoint simply returns a "Hello, World!" message. It can be used to test that the API is up and running.
+
+**Endpoint:**
+
+```
+/
+```
+
+**Request:**
+
+```
+POST
+```
+
+**Response:**
+
+```
+{
+  "message": "Hello, World!"
+}
+```
+
+##### DALL-E Generation Endpoint
+
+This endpoint generates images from text descriptions.
+
+**Endpoint:**
+
+```
+/dalle
+```
+
+**Request:**
+
+```
+POST
+```
+
+**Body:**
+
+```
+{
+  "text": "A photo of a cat wearing a cowboy hat",  # Text prompt for image generation
+  "num_images": 10  # Number of images to generate
+}
+```
+
+**Response:**
+
+```
+{
+  "generatedImages": ["image1.png", "image2.png", ..., "image10.png"],
+  "generatedImgsFormat": "png"  # Format of the generated images
+}
+```
+
+#### Example Usage Code
+
+The following code shows how to use the DALL-E API to generate images from text descriptions:
 
 ```python
 import requests
 
-data = {
-    "text": "A beautiful landscape with mountains and a lake",
-    "num_images": 5
+# Initialize the API client
+api_client = requests.Session()
+
+# Set the API endpoint
+api_endpoint = "http://localhost:8000/dalle"
+
+# Set the request body
+body = {
+  "text": "A photo of a cat wearing a cowboy hat",
+  "num_images": 10
 }
 
-response = requests.post("http://localhost:8000/dalle", json=data)
+# Send the request
+response = api_client.post(api_endpoint, json=body)
+
+# Get the generated images
+generated_images = response.json()["generatedImages"]
+
+# Do something with the generated images...
 ```
 
-The response will be a JSON object containing a list of base64-encoded images.
+### Configuration
 
-**Configuration**
+The DALL-E API can be configured with the following environment variables:
 
-The server can be configured using the following command-line arguments:
-
-| Argument | Description | Default |
+| Variable | Description | Default Value |
 |---|---|---|
-| `--port` | The port to run the server on | 8000 |
-| `--model_version` | The version of the DALL-E model to use | Mini |
-| `--save_to_disk` | Whether to save generated images to disk | False |
-| `--img_format` | The format of generated images | JPEG |
-| `--output_dir` | The directory to save generated images to | `DEFAULT_IMG_OUTPUT_DIR` |
+| `DALL_E_MODEL_VERSION` | The version of the DALL-E model to use | `mini` |
+| `DALL_E_SAVE_TO_DISK` | Whether to save the generated images to disk | `False` |
+| `DALL_E_IMG_FORMAT` | The format of the generated images | `JPEG` |
+| `DALL_E_OUTPUT_DIR` | The directory to save the generated images to | `/tmp/dalle-images` |
 
-**Backend API**
+### Authors
 
-The server exposes the following API endpoints:
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `/` | GET | Returns a welcome message |
-| `/dalle` | POST | Generates images from a text prompt |
-
-**Example Usage**
-
-To generate 5 images from the text prompt "A beautiful landscape with mountains and a lake", you can send the following POST request:
-
-```
-curl -X POST -H 'Content-Type: application/json' -d '{"text": "A beautiful landscape with mountains and a lake", "num_images": 5}' http://localhost:8000/dalle
-```
-
-The response will be a JSON object containing a list of base64-encoded images, which you can then decode and save to disk.
+This API was developed by a team of engineers at [AI Company Name](https://www.example.com).
