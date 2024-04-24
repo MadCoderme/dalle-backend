@@ -1,87 +1,63 @@
-## :computer: DALL-E Server with Flask API
+**Table of Contents:**
 
-### Table of Contents
+* [Introduction](#introduction)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Backend API](#backend-api)
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [Start the Server](#start-the-server)
-    - [Generate Images](#generate-images)
-- [API](#api)
-    - [/dalle](#dalle)
-- [Command-Line Arguments](#command-line-arguments)
-- [Additional Notes](#additional-notes)
+**Introduction**
 
-### Prerequisites
+This document provides a comprehensive overview of the internal DALL-E backend server for the team's use. The server utilizes DALL-E models to generate images from text prompts.
 
-- Python 3.8 or higher
-- Flask
-- Pillow
-- Transformers
-- A GPU with at least 4GB of VRAM
+**Usage**
 
-### Installation
+To use the server, send a POST request to the `/dalle` endpoint with a JSON payload containing the following fields:
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/dalle-server.git
-```
+* `text`: The text prompt to generate images from
+* `num_images`: The number of images to generate (max 100)
 
-2. Install the required packages:
-```bash
-pip install -r requirements.txt
-```
+Example usage:
 
-### Usage
+```python
+import requests
 
-**Assuming you have already installed the prerequisites and cloned the repository** 
-
-#### Start the Server
-
-To start the server, run the following command: 
-
-```bash
-python app.py
-```
-
-The server will start on port 8000. You can change the port by specifying the `--port` argument.
-
-#### Generate Images
-
-To generate images, send a POST request to the `/dalle` endpoint with the following JSON payload:
-
-```json
-{
-  "text": "Your text prompt",
-  "num_images": 4  
+data = {
+    "text": "A beautiful landscape with mountains and a lake",
+    "num_images": 5
 }
+
+response = requests.post("http://localhost:8000/dalle", json=data)
 ```
 
-The server will generate the specified number of images and return them as a base64-encoded string.
+The response will be a JSON object containing a list of base64-encoded images.
 
-### API
+**Configuration**
 
-**POST [dalle]**
-- Generates images based on a text prompt and returns them as a base64-encoded string.
-- Request Body:
-    - `text`: The text prompt to generate images from.
-    - `num_images`: The number of images to generate.
-- Response Body:
-    - `generatedImages`: A list of base64-encoded images.
-    - `generatedImgsFormat`: The format of the generated images (e.g. "JPEG", "PNG").
+The server can be configured using the following command-line arguments:
 
-### Command-Line Arguments
+| Argument | Description | Default |
+|---|---|---|
+| `--port` | The port to run the server on | 8000 |
+| `--model_version` | The version of the DALL-E model to use | Mini |
+| `--save_to_disk` | Whether to save generated images to disk | False |
+| `--img_format` | The format of generated images | JPEG |
+| `--output_dir` | The directory to save generated images to | `DEFAULT_IMG_OUTPUT_DIR` |
 
-The server can be customized using the following command-line arguments:
+**Backend API**
 
-- `--port`: The port to run the server on.
-- `--model_version`: The version of the DALL-E model to use. Can be "mini", "mega", or "mega-full".
-- `--save_to_disk`: Whether to save the generated images to disk.
-- `--img_format`: The format of the generated images (e.g. "JPEG", "PNG").
-- `--output_dir`: The directory to save the generated images to.
+The server exposes the following API endpoints:
 
-### Additional Notes
+| Endpoint | Method | Description |
+|---|---|---|
+| `/` | GET | Returns a welcome message |
+| `/dalle` | POST | Generates images from a text prompt |
 
-- The server uses the DALL-E mini model by default. To use the mega or mega-full models, you will need a GPU with at least 10GB of VRAM.
-- The server can generate up to 10 images at a time.
-- The server is still under development. Please report any bugs or issues on GitHub.
+**Example Usage**
+
+To generate 5 images from the text prompt "A beautiful landscape with mountains and a lake", you can send the following POST request:
+
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"text": "A beautiful landscape with mountains and a lake", "num_images": 5}' http://localhost:8000/dalle
+```
+
+The response will be a JSON object containing a list of base64-encoded images, which you can then decode and save to disk.
