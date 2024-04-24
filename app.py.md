@@ -1,137 +1,89 @@
-## 🖼️ DALL-E API 📸
+## Table of Contents
 
-### Table of Contents
-
-- [Overview](#overview)
-- [Installation](#installation)
+- [About](#about)
 - [Usage](#usage)
-  - [API Endpoints](#api-endpoints)
-    - [Hello World Endpoint](#hello-world-endpoint)
-    - [DALL-E Generation Endpoint](#dalle-generation-endpoint)
-  - [Example Usage Code](#example-usage-code)
-- [Configuration](#configuration)
-- [Authors](#authors)
+- [API](#api)
+    - [/](#/)
+    - [/dalle](#/dalle)
+- [Code Structure](#code-structure)
+    - [app.py](#app.py)
+    - [dalle_model.py](#dalle_model.py)
+- [Arguments](#arguments)
+- [Constants](#constants)
+- [Requirements](#requirements)
+- [To-Do](#to-do)
 
-### Overview
+## About
 
-This API provides a simple and easy-to-use interface to [DALL-E](https://openai.com/dall-e-2/), a powerful AI model that can generate images from text descriptions. With this API, you can quickly and easily create stunning images for a variety of purposes, such as:
+This Flask API allows users to generate images from text prompts using the DALL-E model.
 
-- Social media posts
-- Blog posts
-- Presentations
-- Marketing materials
-
-### Installation
-
-To install the DALL-E API, simply run the following command:
-
-```bash
-pip install dalle-api
-```
-
-### Usage
-
-#### API Endpoints
-
-The DALL-E API provides two main endpoints:
-
-##### Hello World Endpoint
-
-This endpoint simply returns a "Hello, World!" message. It can be used to test that the API is up and running.
-
-**Endpoint:**
+## Usage
 
 ```
-/
+$ python app.py
 ```
 
-**Request:**
+## API
 
-```
-POST
-```
+### /
 
-**Response:**
+- **Method:** POST
+- **Description:** A simple endpoint that returns a greeting message.
 
-```
-{
-  "message": "Hello, World!"
-}
-```
+### /dalle
 
-##### DALL-E Generation Endpoint
+- **Method:** POST
+- **Description:** Generates images from a given text prompt.
+- **Request Body:**
+    - `text`: The text prompt to use for image generation.
+    - `num_images`: The number of images to generate.
+- **Response:**
+    - `generatedImages`: A list of base64-encoded images.
+    - `generatedImgsFormat`: The format of the generated images.
 
-This endpoint generates images from text descriptions.
+## Code Structure
 
-**Endpoint:**
+### app.py
 
-```
-/dalle
-```
+- **Flask App:** The main Flask app is defined here.
+- **CORS Configuration:** CORS is configured to allow cross-origin requests.
+- **Argument Parsing:** Command-line arguments are parsed using the `argparse` library.
+- **DALL-E Model Initialization:** An instance of the `DalleModel` class is created.
+- **API Routes:** The `/` and `/dalle` API routes are defined.
 
-**Request:**
+### dalle_model.py
 
-```
-POST
-```
+- **DalleModel Class:** This class encapsulates the logic for generating images using the DALL-E model.
 
-**Body:**
+## Arguments
 
-```
-{
-  "text": "A photo of a cat wearing a cowboy hat",  # Text prompt for image generation
-  "num_images": 10  # Number of images to generate
-}
-```
+| Argument | Description |
+|---|---|
+| `--port` | The port on which the API will run. |
+| `--model_version` | The version of the DALL-E model to use. |
+| `--save_to_disk` | Whether to save the generated images to disk. |
+| `--img_format` | The format of the generated images. |
+| `--output_dir` | The customer directory for generated images. |
 
-**Response:**
+## Constants
 
-```
-{
-  "generatedImages": ["image1.png", "image2.png", ..., "image10.png"],
-  "generatedImgsFormat": "png"  # Format of the generated images
-}
-```
+| Constant | Description |
+|---|---|
+| `DEFAULT_IMG_OUTPUT_DIR` | The default directory for generated images. |
+| `ModelSize` | An enumeration of the available DALL-E model sizes. |
 
-#### Example Usage Code
+## Requirements
 
-The following code shows how to use the DALL-E API to generate images from text descriptions:
+- Python 3.6+
+- Flask
+- Flask-CORS
+- DALL-E model
+- Base64
+- io
+- pathlib
 
-```python
-import requests
+## To-Do
 
-# Initialize the API client
-api_client = requests.Session()
-
-# Set the API endpoint
-api_endpoint = "http://localhost:8000/dalle"
-
-# Set the request body
-body = {
-  "text": "A photo of a cat wearing a cowboy hat",
-  "num_images": 10
-}
-
-# Send the request
-response = api_client.post(api_endpoint, json=body)
-
-# Get the generated images
-generated_images = response.json()["generatedImages"]
-
-# Do something with the generated images...
-```
-
-### Configuration
-
-The DALL-E API can be configured with the following environment variables:
-
-| Variable | Description | Default Value |
-|---|---|---|
-| `DALL_E_MODEL_VERSION` | The version of the DALL-E model to use | `mini` |
-| `DALL_E_SAVE_TO_DISK` | Whether to save the generated images to disk | `False` |
-| `DALL_E_IMG_FORMAT` | The format of the generated images | `JPEG` |
-| `DALL_E_OUTPUT_DIR` | The directory to save the generated images to | `/tmp/dalle-images` |
-
-### Authors
-
-This API was developed by a team of engineers at [AI Company Name](https://www.example.com).
+- [ ] Add support for more image formats.
+- [ ] Implement a more robust error handling mechanism.
+- [ ] Add unit tests.
