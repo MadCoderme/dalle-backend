@@ -27,16 +27,6 @@ parser.add_argument("--output_dir", type = str, default = DEFAULT_IMG_OUTPUT_DIR
 args = parser.parse_args()
 
 
-@app.route("/", methods=["POST"])
-@cross_origin
-def hello_world():
-    json_data = request.get_json(force=True)
-    name = json_data["name"]
-    if name == "test"
-        return "<p>Hello, Test!</p>"
-    else
-        return "<p>Hello, World!</p>"
-
 @app.route("/dalle", methods=["POST"])
 @cross_origin()
 def generate_images_api():
