@@ -1,87 +1,83 @@
-## Table of Contents
+## **Internal Documentation for DALL-E Server**
 
-- [About](#about)
-- [Usage](#usage)
-- [API](#api)
-    - [/](#/)
-    - [/dalle](#/dalle)
-- [Code Structure](#code-structure)
-    - [app.py](#app.py)
-    - [dalle_model.py](#dalle_model.py)
-    - [utils.py](#utils.py)
-    - [consts.py](#consts.py)
-- [Arguments](#arguments)
-- [Constants](#constants)
-- [Requirements](#requirements)
+### **About**
 
-## About
+This Flask API enables users to generate images from text prompts using the DALL-E model. It features a user-friendly interface and robust functionality.
 
-This Flask API allows users to generate images from text prompts using the DALL-E model.
+### **Usage**
 
-## Usage
+To run the server, execute the following command:
 
 ```
 $ python app.py
 ```
 
-## API
+### **API**
 
-### /
+The API comprises the following endpoints:
 
-- **Method:** GET
-- **Description:** A simple endpoint that returns a greeting message.
+#### `/`
 
-### /dalle
+**Method:** GET
 
-- **Method:** POST
-- **Description:** Generates images from a given text prompt.
-- **Request Body:**
-    - `text`: The text prompt to use for image generation.
-    - `num_images`: The number of images to generate.
-- **Response:**
-    - `generatedImages`: A list of base64-encoded images.
-    - `generatedImgsFormat`: The format of the generated images.
+**Description:** Returns a greeting message.
 
-## Code Structure
+#### `/dalle`
 
-### app.py
+**Method:** POST
 
-- **Flask App:** The main Flask app is defined here.
-- **CORS Configuration:** CORS is configured to allow cross-origin requests.
-- **Argument Parsing:** Command-line arguments are parsed using the `argparse` library.
-- **DALL-E Model Initialization:** An instance of the `DalleModel` class is created.
-- **API Routes:** The `/` and `/dalle` API routes are defined.
+**Description:** Generates images from a provided text prompt.
 
-### dalle_model.py
+**Request Body:**
 
-- **DalleModel Class:** This class encapsulates the logic for generating images using the DALL-E model.
+- `text`: The text prompt for image generation.
+- `num_images`: The desired number of generated images.
 
-### utils.py
+**Response:**
 
-- **Helper Functions:** This module contains helper functions for parsing command-line arguments and converting text prompts to tokens.
+- `generatedImages`: A list of base64-encoded generated images.
+- `generatedImgsFormat`: The format of the generated images.
 
-### consts.py
+### **Code Structure**
 
-- **Constants:** This module contains constants used throughout the application, such as the default output directory for generated images and the available DALL-E model sizes.
+#### **app.py**
 
-## Arguments
+- Defines the Flask app.
+- Configures CORS for cross-origin requests.
+- Parses command-line arguments.
+- Initializes the DALL-E model.
+- Defines API routes.
+
+#### **dalle_model.py**
+
+- Encapsulates the logic for generating images using the DALL-E model.
+
+#### **utils.py**
+
+- Provides helper functions for argument parsing and text prompt tokenization.
+
+#### **consts.py**
+
+- Stores constants, such as the default output directory and available DALL-E model sizes.
+
+### **Arguments**
 
 | Argument | Description |
 |---|---|
-| `--port` | The port on which the API will run. |
-| `--model_version` | The version of the DALL-E model to use. |
-| `--save_to_disk` | Whether to save the generated images to disk. |
-| `--img_format` | The format of the generated images. |
-| `--output_dir` | The customer directory for generated images. |
+| `--port` | Port for the API to run on. |
+| `--model_version` | Version of the DALL-E model (Mini, Mega, Mega_full). |
+| `--save_to_disk` | Enables saving generated images to disk. |
+| `--img_format` | Format of generated images (JPEG, PNG). |
+| `--output_dir` | Custom directory for saving generated images. |
 
-## Constants
+### **Constants**
 
 | Constant | Description |
 |---|---|
-| `DEFAULT_IMG_OUTPUT_DIR` | The default directory for generated images. |
-| `ModelSize` | An enumeration of the available DALL-E model sizes. |
+| `DEFAULT_IMG_OUTPUT_DIR` | Default directory for generated images. |
+| `ModelSize` | Enumeration of available DALL-E model sizes. |
 
-## Requirements
+### **Requirements**
 
 - Python 3.6+
 - Flask
