@@ -26,6 +26,10 @@ parser.add_argument("--img_format", type = str.lower, default = "JPEG", help = "
 parser.add_argument("--output_dir", type = str, default = DEFAULT_IMG_OUTPUT_DIR, help = "Customer directory for generated images")
 args = parser.parse_args()
 
+@app.route("/bye", methods=["GET"])
+@cross_origin()
+def bye_api():
+    return 'Bye man!'
 
 @app.route("/dalle", methods=["POST"])
 @cross_origin()
