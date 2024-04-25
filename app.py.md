@@ -8,10 +8,11 @@
 - [Code Structure](#code-structure)
     - [app.py](#app.py)
     - [dalle_model.py](#dalle_model.py)
+    - [utils.py](#utils.py)
+    - [consts.py](#consts.py)
 - [Arguments](#arguments)
 - [Constants](#constants)
 - [Requirements](#requirements)
-- [To-Do](#to-do)
 
 ## About
 
@@ -27,7 +28,7 @@ $ python app.py
 
 ### /
 
-- **Method:** POST
+- **Method:** GET
 - **Description:** A simple endpoint that returns a greeting message.
 
 ### /dalle
@@ -55,6 +56,14 @@ $ python app.py
 
 - **DalleModel Class:** This class encapsulates the logic for generating images using the DALL-E model.
 
+### utils.py
+
+- **Helper Functions:** This module contains helper functions for parsing command-line arguments and converting text prompts to tokens.
+
+### consts.py
+
+- **Constants:** This module contains constants used throughout the application, such as the default output directory for generated images and the available DALL-E model sizes.
+
 ## Arguments
 
 | Argument | Description |
@@ -81,9 +90,4 @@ $ python app.py
 - Base64
 - io
 - pathlib
-
-## To-Do
-
-- [ ] Add support for more image formats.
-- [ ] Implement a more robust error handling mechanism.
-- [ ] Add unit tests.
+- argparse
