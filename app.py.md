@@ -15,7 +15,10 @@ The codebase is structured as follows:
 
 ### Flask Application
 
-The Flask application is configured with CORS enabled to allow cross-origin requests. It defines a single endpoint, `/dalle`, which handles image generation requests. This endpoint accepts a JSON payload containing the text prompt and the number of images to generate.
+The Flask application is configured with CORS enabled to allow cross-origin requests. It defines two endpoints:
+
+- `/`: Returns a simple "hello world" message.
+- `/dalle`: Handles image generation requests. This endpoint accepts a JSON payload containing the text prompt and the number of images to generate.
 
 ### DALL-E Model Initialization
 
